@@ -3,22 +3,41 @@ const startTimer = (startTime, interval) => {
     return {
         type: 'START_TIMER',
         startTime: startTime,
-        interval: interval
+        interval: interval,
     }
 };
 const stopTimer = (stopTime) => {
     // console.log('stop action')
     return {
         type: 'STOP_TIMER',
-        payload: stopTime,
-        interval: false
+        stopTime: stopTime,
+        interval: false,
     }
 };
 
-const updateTimer = (timeNow) => {
+const firstClick = (startWaitTime) => {
+    return {
+        type: 'FIRST_CLICK',
+        startWaitTime: startWaitTime,
+    }
+};
+
+const secondClick = (endWaitTime) => {
+    return {
+        type: 'SECOND_CLICK',
+        endWaitTime: endWaitTime
+    }
+};
+
+const stoppedAfterWaitOnclick = () => {
+    return {
+        type: 'STOPPED_AFTER_WAIT_ONCLICK'
+    }
+};
+
+const updateTimer = () => {
     return {
         type: 'UPDATE_TIMER',
-        timeNow: timeNow / 1000
     }
 };
 
@@ -28,16 +47,12 @@ const resetTimer = () => {
     }
 };
 
-const waitTimer = () => {
-    return {
-        type: 'WAIT_TIMER'
-    }
-};
-
 export {
     startTimer,
     stopTimer,
     updateTimer,
     resetTimer,
-    waitTimer
+    firstClick,
+    secondClick,
+    stoppedAfterWaitOnclick
 }

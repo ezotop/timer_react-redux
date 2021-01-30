@@ -1,14 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {startTimer, updateTimer, stopTimer, resetTimer, waitTimer} from '../../actions';
+import {startTimer, stopTimer, updateTimer, resetTimer, firstClick, secondClick, stoppedAfterWaitOnclick} from '../../actions';
 
-const Timer = ({time, inter, startTimer, updateTimer, stopTimer, resetTimer}) => {
-    // console.log('rendered');
+const Timer = ({time, inter, startTimer, stopTimer, updateTimer, resetTimer, firstClick, secondClick, stoppedAfterWaitOnclick, waitFirstClicked}) => {
+    // console.log(inter);
 
     function getZero(num) {
-        if (num >= 0 && num < 10) { //Если арг больше или равно 0 И арг меньше 10, то ф-ция возвращает модифицированную строку
+        if (num >= 0 && num < 10) {
             return `0${num}`;
-        } else { //В инном случае возвращаем неизмененный аргумент
+        } else {
             return num;
         }
     }
@@ -32,13 +32,16 @@ const Timer = ({time, inter, startTimer, updateTimer, stopTimer, resetTimer}) =>
     
     return (
         <div>
-            <div className="timer-block">{`${t.hours}:${t.minutes}:${t.seconds}`}</div>
+            <div className="timer-block">{ `${t.hours}:${t.minutes}:${t.seconds}` }</div>
             <div className="btns-block">
                 <button
-                    onClick={inter ? () => {stopTimer(Date.now())} : () => startTimer(Date.now(), interval(1000))}
+                    onClick={ inter ? () => stopTimer(Date.now()) : () => startTimer(Date.now(), interval(1000)) }
                     className="btn btn_start-stop">{inter ? 'Stop' : 'Start'}</button>
                 <button
-                    onClick={inter ? () => {stopTimer(Date.now())} : () => startTimer(Date.now(), interval(300))}
+                    onClick={ (inter && !waitFirstClicked) ? () => firstClick(Date.now()) : () => {
+                        secondClick(Date.now());
+                        stoppedAfterWaitOnclick();
+                    }}
                     className="btn btn_dec">Wait</button>
                 <button
                     onClick={resetTimer}
@@ -52,8 +55,8 @@ const Timer = ({time, inter, startTimer, updateTimer, stopTimer, resetTimer}) =>
 const mapStateToProps = (state) => {
     return {
         time: state.time,
-        isOn: state.isOn,
-        inter: state.interval
+        inter: state.interval,
+        waitFirstClicked: state.waitFirstClicked
     }
 };
 
@@ -62,17 +65,9 @@ const mapDispatchToProps = {
     updateTimer,
     stopTimer,
     resetTimer,
-    waitTimer
+    firstClick,
+    secondClick,
+    stoppedAfterWaitOnclick
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timer);
-
-// const date = Date.now();
-// console.log(date);
-// const dateDate = new Date();
-// console.log(dateDate.getHours())
-// console.log(dateDate.getMinutes())
-// console.log(dateDate.getSeconds())
-// console.log((date + '').length);
-// const some = Date.now().g;
-// console.log(some.);
