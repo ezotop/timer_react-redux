@@ -1,17 +1,15 @@
-const startTimer = (startTime, interval) => {
+const startTimer = (interval) => {
     // console.log('start action', interval);
     return {
         type: 'START_TIMER',
-        startTime: startTime,
         interval: interval,
     }
 };
-const stopTimer = (stopTime) => {
+const stopTimer = (isWait = false) => {
     // console.log('stop action')
     return {
         type: 'STOP_TIMER',
-        stopTime: stopTime,
-        interval: false,
+        isWait: isWait
     }
 };
 
