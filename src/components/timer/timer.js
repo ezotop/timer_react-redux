@@ -29,27 +29,26 @@ const Timer = ({time, inter, startTimer, stopTimer, updateTimer, resetTimer, fir
     const interval = (timeout) => setInterval(() => {
         updateTimer(Date.now());
     }, timeout);
-    
+
     return (
         <div>
             <div className="timer-block">{ `${t.hours}:${t.minutes}:${t.seconds}` }</div>
             <div className="btns-block">
                 <button
-                    onClick={ inter ? () => stopTimer(Date.now()) : () => startTimer(Date.now(), interval(1000)) }
+                    onClick={ inter ? () => stopTimer() : () => startTimer(interval(1000)) }
                     className="btn btn_start-stop">{inter ? 'Stop' : 'Start'}</button>
                 <button
                     onClick={ (inter && !waitFirstClicked) ? () => firstClick(Date.now()) : () => {
                         secondClick(Date.now());
                         stoppedAfterWaitOnclick();
                     }}
-                    className="btn btn_dec">Wait</button>
+                    className="btn btn_w8">Wait</button>
                 <button
                     onClick={resetTimer}
                     className="btn btn_rnd">Reset</button>
             </div>
         </div>
     )
-    
 };
 
 const mapStateToProps = (state) => {

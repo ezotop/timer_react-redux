@@ -21,7 +21,7 @@ const reducer = (state = initialState, action) => {
 
             return {
                 ...state,
-                interval: action.interval
+                interval: false
             };
         case 'UPDATE_TIMER':
             return {
@@ -67,7 +67,7 @@ const reducer = (state = initialState, action) => {
                 stopWaitTime: 0,
                 interval: afterWaitStop().interval,
                 waitFirstClicked: false
-            }
+            };
         default:
             return state;
     }
